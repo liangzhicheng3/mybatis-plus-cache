@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangzhicheng.modules.mapper.ITestUserMapper">
+
+    <resultMap id="userMap" type="com.liangzhicheng.modules.entity.TestUser">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="deptId" column="dept_id"/>
+    </resultMap>
+
+    <cache-ref namespace="com.liangzhicheng.modules.mapper.ITestUserMapper"/>
+
+    <select id="get" resultType="com.liangzhicheng.modules.entity.TestUser" resultMap="userMap">
+        SELECT
+               tu.*,
+               td.name AS deptName
+        FROM test_user tu
+        LEFT JOIN test_dept td
+        ON tu.dept_id = td.id
+        WHERE tu.id = #{userId}
+    </select>
+
+</mapper>
